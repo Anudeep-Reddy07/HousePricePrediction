@@ -20,17 +20,23 @@ def predict():
     bedroom=int(request.form["bedrooms"])
     bathroom=float(request.form["bathrooms"])
     sqft_living=int(request.form["sqft_living"])
+    floors=int(request.form["floors"])
+    waterfront=int(request.form["waterfront"])
+    sqft_lot=int(request.form["sqft_lot"])
+    view=int(request.form["view"])
+    condition=int(request.form["condition"])
+    yr_built=int(request.form["yr_built"])
     sample_house=pd.DataFrame([{"bedrooms": bedroom,
         "bathrooms": bathroom,
         "sqft_living": sqft_living,
-        "sqft_lot": 5000,
-        "floors": 1,
-        "waterfront": 0,
-        "view": 0,
-        "condition": 3,
-        "sqft_above": 1800,
+        "sqft_lot": sqft_lot,
+        "floors": floors,
+        "waterfront": waterfront,
+        "view": view,
+        "condition": condition,
+        "sqft_above": sqft_living,
         "sqft_basement": 0,
-        "yr_built": 2000,
+        "yr_built": yr_built,
         "yr_renovated": 0,}])
     
     for col in city_columns:
