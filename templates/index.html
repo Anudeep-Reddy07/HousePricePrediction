@@ -1,49 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>House Price Predictor</title>
 </head>
+
 <body>
 
-<h1>House Price Predictor</h1>
+    <h1>House Price Predictor</h1>
 
-<form action="/predict" method="post">
-
-
-    Living Area(sqft):
-    <input type="number" name="sqft_living"><br><br>
-
-    Lot Area(sqft):
-    <input type="number" name="sqft_lot"><br><br>
-
-    Bedrooms:
-    <input type="number" name="bedrooms"><br><br>
-
-    Bathrooms:
-    <input type="number" name="bathrooms"><br><br>
-
-    Floors:
-    <input type="number" name="floors"><br><br>
-
-    Condition:
-    <input type="number" name="condition"><br><br>
-
-    Year Built:
-    <input type="number" name="yr_built"><br><br>
-
-    Waterfront:
-    <input type="number" name="waterfront"><br><br>
-
-    View:
-    <input type="number" name="view"><br><br>
+    <form action="/predict" method="post">
 
 
+        City:
+        <select name="city">
+            {% for city in cities %}
+            <option value="{{city}}">{{city}}</option>
+            {% endfor %}
+        </select>
 
-    <input type="submit" value="Predict">
+        StateZip:
+        <select name="statezip">
+            {% for statezip in statezips %}
+            <option value="{{statezip}}">{{statezip}}</option>
+            {% endfor %}
+        </select>
 
-    
+        Living Area(sqft):
+        <input type="number" name="sqft_living"><br><br>
 
-</form>
+        Lot Area(sqft):
+        <input type="number" name="sqft_lot"><br><br>
+
+        Bedrooms:
+        <input type="number" name="bedrooms"><br><br>
+
+        Bathrooms:
+        <input type="number" name="bathrooms"><br><br>
+
+        Floors:
+        <input type="number" name="floors"><br><br>
+
+        <label>Condition:</label>
+
+        <input type="range" name="condition" min="1" max="5" value="3" id="conditionSlider">
+
+        <span id="conditionValue">3</span>
+
+        Year Built:
+        <input type="number" name="yr_built"><br><br>
+
+        Waterfront:
+        <select name="waterfront">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+
+        <label>View:</label>
+
+        <input type="range" name="view" min="1" max="5" value="3" id="viewSlider">
+
+        <span id="viewValue">3</span>
+
+
+
+        <input type="submit" value="Predict">
+
+
+
+    </form>
+
+    <script>
+
+        const conditionSlider = document.getElementById("conditionSlider");
+        const conditionValue = document.getElementById("conditionValue");
+
+        conditionSlider.oninput = function () {
+            conditionValue.innerHTML = this.value;
+        };
+
+        const viewSlider = document.getElementById("viewSlider");
+        const viewValue = document.getElementById("viewValue");
+
+        viewSlider.oninput = function () {
+            viewValue.innerHTML = this.value;
+        };
+
+    </script>
 
 </body>
+
 </html>

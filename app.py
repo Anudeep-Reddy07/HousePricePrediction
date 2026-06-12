@@ -12,7 +12,22 @@ statezip_columns = joblib.load("models/statezip_columns.pkl")
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    cities = [col.replace("city_", "") for col in city_columns]
+
+    statezips = [
+        col.replace("statezip_", "")
+        for col in statezip_columns
+    ]
+
+    print(cities[:5])
+    print(statezips[:5])
+
+    return render_template(
+        "index.html",
+        cities=cities,
+        statezips=statezips
+    )
+
 
 @app.route("/predict",methods=["post"])
 def predict():
@@ -26,6 +41,8 @@ def predict():
     view=int(request.form["view"])
     condition=int(request.form["condition"])
     yr_built=int(request.form["yr_built"])
+    city=request.form["city"]
+    statezip=request.form["statezip"]
     sample_house=pd.DataFrame([{"bedrooms": bedroom,
         "bathrooms": bathroom,
         "sqft_living": sqft_living,
@@ -43,6 +60,14 @@ def predict():
         sample_house[col]=0
     for col in statezip_columns:
         sample_house[col] = 0
+
+    city_col=f"city_{city}"
+    if city_col in sample_house.columns:
+        sample_house[city_col]=1
+
+    zip_col=f"zip_{statezip}"
+    if zip_col in sample_house.columns:
+        sample_house[zip_col]=1
     
     print(sample_house.shape)
     
